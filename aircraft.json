@@ -1,0 +1,1775 @@
+[
+  {
+    "mass": 600,
+    "dragFactor": 0.33,
+    "flapsTravelTime": 0.1,
+    "flapsSteps": 3,
+    "optionalAnimatedPartTravelTime": 1,
+    "accessoriesTravelTime": 10,
+    "cockpitShadowMapMaxDistance": 50,
+    "zeroRPMAltitude": 42000,
+    "minRPM": 1000,
+    "maxRPM": 2700,
+    "minimumSpeed": 80,
+    "driveRatio": 0.25,
+    "engineInertia": 1,
+    "startupTime": 6,
+    "startAltitude": 1.3,
+    "startTilt": 0,
+    "Vspeeds": {
+      "VS0": 18,
+      "VS": 21,
+      "VFE": 45,
+      "VNO": 56,
+      "VNE": 88
+    },
+    "contactProperties": {
+      "wheel": {
+        "frictionCoef": 8,
+        "dynamicFriction": 0.01,
+        "rollingFriction": 0.0001,
+        "damping": 1
+      },
+      "frame": {
+        "frictionCoef": 2,
+        "dynamicFriction": 0.01,
+        "damping": 1
+      },
+      "airfoil": {
+        "frictionCoef": 2,
+        "dynamicFriction": 0.01,
+        "damping": 1
+      }
+    },
+    "parts": [
+      {
+        "name": "root",
+        "type": "root",
+        "points": {
+          "centerOfMass": [
+            0,
+            -0.2,
+            0.1
+          ]
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "model": "sonexb.gltf"
+      },
+      {
+        "type": "frame",
+        "name": "body",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "area": 10,
+        "forceDirection": "X",
+        "buoyancy": 15000,
+        "points": {
+          "forceSourcePoint": [
+            0,
+            0.2,
+            0
+          ]
+        },
+        "collisionPoints": [
+          [
+            0,
+            1.6,
+            0.31
+          ],
+          [
+            -3,
+            -0.1,
+            0
+          ],
+          [
+            0,
+            -0.6,
+            0.9
+          ],
+          [
+            3,
+            -0.1,
+            0
+          ],
+          [
+            -1,
+            -3.4,
+            0.38
+          ],
+          [
+            1,
+            -3.4,
+            0.38
+          ],
+          [
+            0,
+            -3.4,
+            0.99
+          ]
+        ]
+      },
+      {
+        "type": "engine",
+        "name": "engine",
+        "comment": "Jabiru 120HP, 530lbs, ceiling FL230 ",
+        "thrust": 2400,
+        "forceDirection": "Y",
+        "position": [
+          0,
+          1,
+          0.07
+        ],
+        "points": {
+          "forceSourcePoint": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "propcone",
+        "node": "propcone",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "prop",
+            "ratio": -1
+          }
+        ]
+      },
+      {
+        "name": "prop",
+        "node": "prop",
+        "parent": "propcone",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "rpm",
+            "threshold": 1000
+          }
+        ]
+      },
+      {
+        "name": "propwash",
+        "node": "propwash",
+        "parent": "propcone",
+        "animations": [
+          {
+            "type": "show",
+            "value": "rpm",
+            "threshold": 1000
+          },
+          {
+            "type": "justhide",
+            "value": "view",
+            "eq": "cockpitless"
+          }
+        ]
+      },
+      {
+        "comment": "FakeAirfoils",
+        "desc": "since my 3d model is rotated beyond fixing, this essentially adds a separate physics model. values reflect ingame flying characteristics, not real world measurements."
+      },
+      {
+        "type": "airfoil",
+        "name": "aWingRight",
+        "span": 6,
+        "chord": 1.7,
+        "forceDirection": "Z",
+        "points": {
+          "forceSourcePoint": [
+            2,
+            -0.2,
+            0
+          ]
+        },
+        "stallIncidence": 11,
+        "zeroLiftIncidence": 12,
+        "rotation": [
+          -2,
+          3.2,
+          0
+        ],
+        "stalls": true,
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Y",
+            "value": "accessoriesPosition",
+            "ratio": -90
+          }
+        ]
+      },
+      {
+        "type": "airfoil",
+        "name": "aWingLeft",
+        "span": 6,
+        "chord": 1.7,
+        "forceDirection": "Z",
+        "points": {
+          "forceSourcePoint": [
+            -2,
+            -0.2,
+            0
+          ]
+        },
+        "stallIncidence": 11,
+        "zeroLiftIncidence": 12,
+        "rotation": [
+          -2,
+          -3.2,
+          0
+        ],
+        "stalls": true,
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Y",
+            "value": "accessoriesPosition",
+            "ratio": 90
+          },
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "accessoriesPosition",
+            "ratio": 4
+          },
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "optionalAnimatedPartPosition",
+            "ratio": -2
+          }
+        ]
+      },
+      {
+        "type": "airfoil",
+        "name": "aAileronRight",
+        "area": 0.5,
+        "forceDirection": "Z",
+        "position": [
+          2,
+          -0.5,
+          0
+        ],
+        "points": {
+          "forceSourcePoint": [
+            0.5,
+            0,
+            0
+          ]
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "roll",
+            "ratio": 20
+          }
+        ]
+      },
+      {
+        "type": "airfoil",
+        "name": "aAileronLeft",
+        "area": 0.5,
+        "forceDirection": "Z",
+        "position": [
+          -2,
+          -0.5,
+          0
+        ],
+        "points": {
+          "forceSourcePoint": [
+            -0.5,
+            0,
+            0
+          ]
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "roll",
+            "ratio": -20
+          }
+        ]
+      },
+      {
+        "type": "airfoil",
+        "name": "aFlapsRight",
+        "area": 0.7,
+        "forceDirection": "Z",
+        "position": [
+          1.5,
+          -0.5,
+          0
+        ],
+        "points": {
+          "forceSourcePoint": [
+            0,
+            0,
+            0
+          ]
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "flapsPosition",
+            "ratio": -5
+          }
+        ]
+      },
+      {
+        "type": "airfoil",
+        "name": "aFlapsLeft",
+        "area": 0.7,
+        "forceDirection": "Z",
+        "position": [
+          -1.5,
+          -0.5,
+          0
+        ],
+        "points": {
+          "forceSourcePoint": [
+            0,
+            0,
+            0
+          ]
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "flapsPosition",
+            "ratio": -5
+          }
+        ]
+      },
+      {
+        "type": "airfoil",
+        "name": "aHorizontalStabilzer",
+        "forceDirection": "Z",
+        "area": 1.4,
+        "points": {
+          "forceSourcePoint": [
+            0,
+            -3.2,
+            0.4
+          ]
+        }
+      },
+      {
+        "type": "airfoil",
+        "name": "aElevator",
+        "area": 0.6,
+        "forceDirection": "Z",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "pitch",
+            "ratio": 20
+          }
+        ],
+        "position": [
+          0,
+          -3.4,
+          0.4
+        ],
+        "points": {
+          "forceSourcePoint": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "type": "airfoil",
+        "name": "aVerticalStabilzer",
+        "forceDirection": "X",
+        "area": 0.5,
+        "points": {
+          "forceSourcePoint": [
+            0,
+            -3.2,
+            0.4
+          ]
+        }
+      },
+      {
+        "type": "airfoil",
+        "name": "aRudder",
+        "area": 0.6,
+        "forceDirection": "X",
+        "position": [
+          0,
+          -1.4,
+          0.4
+        ],
+        "points": {
+          "forceSourcePoint": [
+            0,
+            0,
+            0
+          ]
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "yaw",
+            "ratio": -23
+          }
+        ]
+      },
+      {
+        "comment": "SurfaceAnimations"
+      },
+      {
+        "name": "wingR",
+        "node": "wingR",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "aWingRightLift",
+            "ratio": 0.0005,
+            "offset": 0,
+            "fmax": 2,
+            "fmin": -2
+          }
+        ]
+      },
+      {
+        "name": "wingROuter",
+        "node": "wingROuter",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "accessoriesPosition",
+            "ratio": 110
+          }
+        ]
+      },
+      {
+        "name": "wingL",
+        "node": "wingL",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "aWingLeftLift",
+            "ratio": -0.0005,
+            "offset": 0,
+            "fmax": 2,
+            "fmin": -2
+          }
+        ]
+      },
+      {
+        "name": "wingLOuter",
+        "node": "wingLOuter",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "accessoriesPosition",
+            "ratio": -110
+          }
+        ]
+      },
+      {
+        "name": "surfaceAileronR",
+        "node": "surfaceAileronR",
+        "parent": "wingROuter",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "roll",
+            "ratio": 20
+          }
+        ]
+      },
+      {
+        "name": "surfaceAileronL",
+        "node": "surfaceAileronL",
+        "parent": "wingLOuter",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "roll",
+            "ratio": -20
+          }
+        ]
+      },
+      {
+        "name": "surfaceFlapsL",
+        "node": "surfaceFlapsL",
+        "parent": "wingL",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "flapsPosition",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "surfaceFlapsLOuter",
+        "node": "surfaceFlapsLOuter",
+        "parent": "wingLOuter",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "flapsPosition",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "surfaceFlapsR",
+        "node": "surfaceFlapsR",
+        "parent": "wingR",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "flapsPosition",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "surfaceFlapsROuter",
+        "node": "surfaceFlapsROuter",
+        "parent": "wingROuter",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "flapsPosition",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "surfaceElevatorTrim",
+        "node": "surfaceElevatorTrim",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "trim",
+            "ratio": 20
+          }
+        ]
+      },
+      {
+        "name": "surfaceElevatorL",
+        "node": "surfaceElevatorL",
+        "parent": "surfaceElevatorTrim",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "rawPitch",
+            "ratio": 20
+          }
+        ]
+      },
+      {
+        "name": "surfaceElevatorR",
+        "node": "surfaceElevatorR",
+        "parent": "surfaceElevatorTrim",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "rawPitch",
+            "ratio": 20
+          }
+        ]
+      },
+      {
+        "name": "surfaceRudder",
+        "node": "surfaceRudder",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Y",
+            "value": "yaw",
+            "ratio": -23
+          }
+        ]
+      },
+      {
+        "comment": "LandingGear"
+      },
+      {
+        "type": "wheel",
+        "name": "gearLeft",
+        "position": [
+          -0.4,
+          0.1,
+          0.25
+        ],
+        "collisionPoints": [
+          [
+            -0.2,
+            0.1,
+            -0.8
+          ]
+        ],
+        "suspension": {
+          "motion": "rotation",
+          "stiffness": 20,
+          "damping": 10
+        }
+      },
+      {
+        "name": "wheelLAnim",
+        "node": "wheelL",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "gearLeftRotation",
+            "ratio": 9
+          },
+          {
+            "type": "translate",
+            "axis": "Y",
+            "value": "gearLeftSuspension",
+            "ratio": 0.1
+          }
+        ]
+      },
+      {
+        "type": "wheel",
+        "name": "gearRight",
+        "position": [
+          0.4,
+          0.1,
+          0.25
+        ],
+        "collisionPoints": [
+          [
+            0.2,
+            0.1,
+            -0.8
+          ]
+        ],
+        "suspension": {
+          "motion": "rotation",
+          "stiffness": 20,
+          "damping": 10
+        }
+      },
+      {
+        "name": "wheelRAnim",
+        "node": "wheelR",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "gearRightRotation",
+            "ratio": 9
+          },
+          {
+            "type": "translate",
+            "axis": "Y",
+            "value": "gearRightSuspension",
+            "ratio": 0.1
+          }
+        ]
+      },
+      {
+        "type": "wheel",
+        "name": "gearTailSuspensionDef",
+        "position": [
+          0,
+          -3.2,
+          0
+        ],
+        "collisionPoints": [
+          [
+            0,
+            -0.22,
+            -0.12
+          ]
+        ],
+        "suspension": {
+          "stiffness": 30,
+          "damping": 5
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "yaw",
+            "ratio": -20
+          }
+        ]
+      },
+      {
+        "name": "gearTailSuspension",
+        "node": "gearTailSuspension",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "gearTailSuspensionDefSuspension",
+            "ratio": 170,
+            "offset": -10
+          }
+        ]
+      },
+      {
+        "name": "gearTail",
+        "node": "gearTail",
+        "parent": "gearTailSuspension",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Y",
+            "value": "yaw",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "wheelT",
+        "node": "wheelT",
+        "parent": "gearTail",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "gearRightRotation",
+            "ratio": 20
+          }
+        ]
+      },
+      {
+        "comment": "CockpitAnimations"
+      },
+      {
+        "name": "cockpitPowerButtonON",
+        "node": "cockpitPowerButtonON",
+        "manipulator": {
+          "setter": "toggleEngines"
+        }
+      },
+      {
+        "name": "cockpitPowerButtonOFF",
+        "node": "cockpitPowerButtonOFF",
+        "animations": [
+          {
+            "type": "show",
+            "value": "enginesOn",
+            "eq": 1
+          },
+          {
+            "type": "hide",
+            "value": "enginesOn",
+            "eq": 0
+          }
+        ],
+        "manipulator": {
+          "setter": "toggleEngines"
+        }
+      },
+      {
+        "name": "cockpitAutopilotToggle",
+        "node": "cockpitG1000APbutton",
+        "manipulator": {
+          "setter": "toggleAutoPilot"
+        }
+      },
+      {
+        "name": "canopyDoor",
+        "node": "canopyDoor",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "optionalAnimatedPartPosition",
+            "ratio": -60
+          }
+        ]
+      },
+      {
+        "name": "canopyDoorHandle",
+        "node": "canopyDoorHandle",
+        "manipulator": {
+          "setter": "setOptionalAnimatedPart"
+        }
+      },
+      {
+        "name": "cockpitMixture",
+        "node": "cockpitMixture",
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "X",
+            "value": "mixture",
+            "ratio": 0.06,
+            "offset": -0.06
+          }
+        ],
+        "manipulator": {
+          "control": "mixture",
+          "input": "iyr",
+          "max": 1,
+          "min": 0.001,
+          "ratio": 6
+        }
+      },
+      {
+        "name": "cockpitThrottle",
+        "node": "cockpitThrottle",
+        "manipulator": {
+          "control": "throttle",
+          "input": "iyr",
+          "max": 1,
+          "min": 0.001,
+          "ratio": 6
+        },
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "X",
+            "value": "throttle",
+            "ratio": 0.06,
+            "offset": -0.06
+          }
+        ]
+      },
+      {
+        "name": "cockpitTrim",
+        "node": "cockpitTrim",
+        "manipulator": {
+          "control": "elevatorTrim",
+          "input": "iyr",
+          "max": 0.5,
+          "min": -0.5,
+          "ratio": 0.5
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "trim",
+            "ratio": -1440
+          }
+        ]
+      },
+      {
+        "name": "cockpitFlaps",
+        "node": "cockpitFlaps",
+        "manipulator": {
+          "setter": "cycleFlaps"
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "flapsPosition",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "cockpitYoke",
+        "node": "cockpitYoke",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "pitch",
+            "ratio": -15
+          },
+          {
+            "type": "rotate",
+            "axis": "X",
+            "value": "roll",
+            "ratio": -15
+          }
+        ]
+      },
+      {
+        "name": "cockpitYokeBoot1",
+        "node": "cockpitYokeBoot1",
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "X",
+            "value": "pitch",
+            "ratio": -0.01
+          },
+          {
+            "type": "translate",
+            "axis": "Z",
+            "value": "roll",
+            "ratio": 0.01
+          }
+        ]
+      },
+      {
+        "name": "cockpitYokeBoot2",
+        "node": "cockpitYokeBoot2",
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "X",
+            "value": "pitch",
+            "ratio": -0.019
+          },
+          {
+            "type": "translate",
+            "axis": "Z",
+            "value": "roll",
+            "ratio": 0.019
+          }
+        ]
+      },
+      {
+        "name": "cockpitYokeBoot3",
+        "node": "cockpitYokeBoot3",
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "X",
+            "value": "pitch",
+            "ratio": -0.028
+          },
+          {
+            "type": "translate",
+            "axis": "Z",
+            "value": "roll",
+            "ratio": 0.028
+          }
+        ]
+      },
+      {
+        "name": "cockpitYokeBoot4",
+        "node": "cockpitYokeBoot4",
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "X",
+            "value": "pitch",
+            "ratio": -0.04
+          },
+          {
+            "type": "translate",
+            "axis": "Z",
+            "value": "roll",
+            "ratio": 0.04
+          }
+        ]
+      },
+      {
+        "name": "cockpitRudderL",
+        "node": "cockpitRudderL",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "yaw",
+            "ratio": 20,
+            "offset": 30
+          }
+        ]
+      },
+      {
+        "name": "cockpitBrakeL",
+        "node": "cockpitBrakeL",
+        "manipulator": {
+          "setter": "toggleParkingBrake"
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "brakes",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "name": "cockpitRudderR",
+        "node": "cockpitRudderR",
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "yaw",
+            "ratio": -20,
+            "offset": 30
+          }
+        ]
+      },
+      {
+        "name": "cockpitBrakeR",
+        "node": "cockpitBrakeR",
+        "manipulator": {
+          "setter": "toggleParkingBrake"
+        },
+        "animations": [
+          {
+            "type": "rotate",
+            "axis": "Z",
+            "value": "brakes",
+            "ratio": -10
+          }
+        ]
+      },
+      {
+        "comment": "CockpitInstruments"
+      },
+      {
+        "name": "3d-compass",
+        "include": "3d-compassball",
+        "position": [
+          0,
+          0.218,
+          0.58
+        ],
+        "rotation": [
+          10,
+          0,
+          0
+        ],
+        "scale": [
+          0.023,
+          0.01,
+          0.023
+        ]
+      },
+      {
+        "name": "3d-g1000",
+        "include": "3d-G1000",
+        "position": [
+          -0.1567,
+          0.146,
+          0.476
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.159,
+          0.16,
+          0.172
+        ]
+      },
+      {
+        "name": "3d-oil",
+        "include": "3d-oil",
+        "position": [
+          0,
+          0.162,
+          0.5
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "name": "3d-manifold",
+        "include": "3d-manifold",
+        "position": [
+          0,
+          0.137,
+          0.46
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "name": "3d-rpm",
+        "include": "3d-rpm-3000",
+        "position": [
+          0.06,
+          0.168,
+          0.51
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.72,
+          0.72,
+          0.72
+        ]
+      },
+      {
+        "name": "3d-ias-arcs",
+        "include": "3d-ias",
+        "position": [
+          0.13,
+          0.17,
+          0.51
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.7,
+          0.7,
+          0.7
+        ]
+      },
+      {
+        "name": "3d-attitude",
+        "include": "3d-attitude",
+        "position": [
+          0.2,
+          0.17,
+          0.51
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.7,
+          0.7,
+          0.7
+        ]
+      },
+      {
+        "name": "3d-altimeter",
+        "include": "3d-altimeter",
+        "position": [
+          0.27,
+          0.17,
+          0.51
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.7,
+          0.7,
+          0.7
+        ]
+      },
+      {
+        "name": "3d-vario",
+        "include": "3d-vario",
+        "position": [
+          0.33,
+          0.164,
+          0.5
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "name": "3d-hsi",
+        "include": "3d-hsi",
+        "position": [
+          0.383,
+          0.12,
+          0.44
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.8,
+          0.8,
+          0.8
+        ]
+      },
+      {
+        "comment": "CockpitInstrumentKobs"
+      },
+      {
+        "name": "3d-hsi-courseKnob",
+        "include": "3d-hsi",
+        "position": [
+          -0.03,
+          0.17,
+          0.505
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.8,
+          0.8,
+          0.8
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-Rectangle001",
+        "node": "Rectangle001",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-compass",
+        "node": "compass",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-plane",
+        "node": "plane",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-Rectangle014",
+        "node": "Rectangle014",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-hdg_flag",
+        "node": "hdg_flag",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-nav_flag",
+        "node": "nav_flag",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-glideSlope",
+        "node": "glideSlope",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-courseKnob-headingKnob",
+        "node": "headingKnob",
+        "parent": "3d-hsi-courseKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob",
+        "include": "3d-hsi",
+        "position": [
+          -0.283,
+          0.17,
+          0.505
+        ],
+        "rotation": [
+          32,
+          0,
+          0
+        ],
+        "scale": [
+          0.8,
+          0.8,
+          0.8
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-Rectangle001",
+        "node": "Rectangle001",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-compass",
+        "node": "compass",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-plane",
+        "node": "plane",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-Rectangle014",
+        "node": "Rectangle014",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-hdg_flag",
+        "node": "hdg_flag",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-nav_flag",
+        "node": "nav_flag",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-glideSlope",
+        "node": "glideSlope",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "name": "3d-hsi-headingKnob-courseKnob",
+        "node": "courseKnob",
+        "parent": "3d-hsi-headingKnob",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "night",
+            "notEq": 2
+          }
+        ]
+      },
+      {
+        "comment": "Lights"
+      },
+      {
+        "name": "strobe",
+        "light": "white",
+        "animations": [
+          {
+            "type": "show",
+            "value": "strobe"
+          }
+        ],
+        "position": [
+          0,
+          -3.2,
+          1.1
+        ]
+      },
+      {
+        "name": "leftlight",
+        "light": "red",
+        "animations": [
+          {
+            "type": "hide",
+            "value": "accessoriesPosition"
+          },
+          {
+            "type": "translate",
+            "axis": "Z",
+            "value": "aWingLeftLift",
+            "ratio": 0.00002,
+            "fmax": 0.1,
+            "fmin": -0.2
+          }
+        ],
+        "position": [
+          -3,
+          -0.1,
+          0.1
+        ]
+      },
+      {
+        "name": "rightlight",
+        "light": "green",
+        "animations": [
+          {
+            "type": "translate",
+            "axis": "Z",
+            "value": "aWingRightLift",
+            "ratio": 0.00002,
+            "fmax": 0.1,
+            "fmin": -0.2
+          },
+          {
+            "type": "hide",
+            "value": "accessoriesPosition"
+          }
+        ],
+        "position": [
+          3,
+          -0.1,
+          0.1
+        ]
+      }
+    ],
+    "autopilot": {
+      "baseClimbrate": 500,
+      "throttlePID": [
+        0.01,
+        0.006,
+        0.006
+      ]
+    },
+    "instruments": {
+      "hsi": {
+        "animations": [
+          {
+            "value": "view",
+            "type": "show",
+            "notEq": "cockpit"
+          }
+        ]
+      },
+      "airspeed": {
+        "animations": [
+          {
+            "value": "view",
+            "type": "show",
+            "notEq": "cockpit"
+          }
+        ]
+      },
+      "attitude": {
+        "animations": [
+          {
+            "value": "view",
+            "type": "show",
+            "notEq": "cockpit"
+          }
+        ]
+      },
+      "altitude": {
+        "animations": [
+          {
+            "value": "view",
+            "type": "show",
+            "notEq": "cockpit"
+          }
+        ]
+      },
+      "vario": {
+        "animations": [
+          {
+            "value": "view",
+            "type": "show",
+            "notEq": "cockpit"
+          }
+        ]
+      },
+      "rpm3000": {
+        "animations": [
+          {
+            "value": "view",
+            "type": "show",
+            "notEq": "cockpit"
+          }
+        ]
+      },
+      "optionx": "",
+      "optionz": "",
+      "trim": "",
+      "brakes": "",
+      "flaps": ""
+    },
+    "shadowBox": [
+      6,
+      6
+    ],
+    "shadowFile": "shadow.gltf",
+    "sounds": [
+      {
+        "id": "rpm1",
+        "file": "sounds/o235/rpm1.ogg",
+        "effects": {
+          "volume": {
+            "value": "rpm",
+            "ramp": [
+              800,
+              950,
+              1200,
+              1700
+            ]
+          },
+          "pitch": {
+            "value": "rpm",
+            "ramp": [
+              0,
+              10000,
+              10000,
+              10000
+            ],
+            "ratio": 1,
+            "offset": 1
+          }
+        }
+      },
+      {
+        "id": "rpm2",
+        "file": "sounds/o235/rpm2.ogg",
+        "effects": {
+          "volume": {
+            "value": "rpm",
+            "ramp": [
+              1000,
+              1200,
+              2000,
+              2500
+            ]
+          },
+          "pitch": {
+            "value": "rpm",
+            "ramp": [
+              0,
+              10000,
+              10000,
+              10000
+            ],
+            "ratio": 1,
+            "offset": 1
+          }
+        }
+      },
+      {
+        "id": "rpm3",
+        "file": "sounds/o235/rpm3.ogg",
+        "effects": {
+          "volume": {
+            "value": "rpm",
+            "ramp": [
+              1500,
+              2000,
+              2500,
+              3000
+            ]
+          },
+          "pitch": {
+            "value": "rpm",
+            "ramp": [
+              0,
+              10000,
+              10000,
+              10000
+            ],
+            "ratio": 1,
+            "offset": 1
+          }
+        }
+      },
+      {
+        "id": "rpm4",
+        "file": "sounds/o235/rpm4.ogg",
+        "cut": [
+          0,
+          1000
+        ],
+        "effects": {
+          "volume": {
+            "value": "rpm",
+            "ramp": [
+              2000,
+              2500,
+              5000,
+              5000
+            ]
+          },
+          "pitch": {
+            "value": "rpm",
+            "ramp": [
+              0,
+              10000,
+              10000,
+              10000
+            ],
+            "ratio": 1,
+            "offset": 1
+          }
+        }
+      },
+      {
+        "id": "rolling",
+        "file": "sounds/tyres/rolling3.ogg",
+        "fadeDuration": 500,
+        "effects": {
+          "volume": {
+            "value": "rollingSpeed",
+            "ramp": [
+              0,
+              20,
+              1000,
+              1000
+            ]
+          }
+        }
+      },
+      {
+        "id": "touch",
+        "file": "sounds/tyres/touch3.ogg",
+        "effects": {
+          "start": {
+            "value": "maxAngularVRatio",
+            "gt": 300
+          }
+        }
+      }
+    ],
+    "soundSet": "player",
+    "canary": "tm",
+    "cameras": {
+      "cockpit": {
+        "offsetBounds": [
+          -0.06,
+          0.54,
+          0,
+          0.6,
+          0,
+          0
+        ],
+        "position": [
+          -0.24,
+          -0.6,
+          0.7
+        ],
+        "orientation": [
+          0,
+          -10,
+          0
+        ],
+        "FOV": 1
+      },
+      "follow": {
+        "distance": 20,
+        "lookAtHeight": -1
+      }
+    }
+  }
+]
